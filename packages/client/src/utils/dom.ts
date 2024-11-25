@@ -1,6 +1,5 @@
-
 class $Elements {
-  private elements: Array<Element>
+  private elements: Array<Element>;
 
   constructor(elems: NodeListOf<Element>) {
     this.elements = Array.from(elems);
@@ -9,7 +8,7 @@ class $Elements {
   set(prop: string, value: string) {
     this.elements.forEach((elem) => {
       elem.setAttribute(prop, value);
-    })
+    });
   }
 
   get(prop) {
@@ -20,10 +19,9 @@ class $Elements {
       });
 
       if (props.length == 1) {
-        return props[0]
-      }
-      else {
-        return props
+        return props[0];
+      } else {
+        return props;
       }
     }
     // if index get element
@@ -34,7 +32,7 @@ class $Elements {
 }
 
 export function $(query: string) {
-  let proxy = new Proxy(new $Elements(document.querySelectorAll(query)), {
+  const proxy = new Proxy(new $Elements(document.querySelectorAll(query)), {
     get(obj, prop) {
       // if prop is not a number
       if (isNaN(Number(prop)) == true) {
@@ -42,9 +40,9 @@ export function $(query: string) {
       }
       // prop is an index
       else {
-        return obj.get(prop)
+        return obj.get(prop);
       }
-    }
+    },
   });
   return proxy;
 }
